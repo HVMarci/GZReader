@@ -7,8 +7,8 @@ import java.io.FileOutputStream;
 public class Main {
 
 	public static void main(String[] args) throws Exception {
-		String filename = "C:\\HashiCorp\\Minecraft.tar.gza.gz";
-//		String filename = "C:\\Users\\marci\\java_erdekessegek\\GZReader\\Minecraft.tar.gz";
+//		String filename = "C:\\HashiCorp\\Minecraft.tar.gza.gz";
+		String filename = "C:\\Users\\marci\\java_erdekessegek\\GZReader\\Minecraft.tar.gz";
 //		String filename = "/home/marci/Letöltések/gunzip.c.gz";
 //		String filename = "/home/marci/Dokumentumok/text.txt.gz";
 		File f = new File(filename);

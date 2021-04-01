@@ -29,8 +29,8 @@ public class HuffmanCode {
 
 	public HuffmanCode(BooleanArrayList als, InputStream is) throws IOException {
 		System.out.println("Huffman tábla készítése megkezdve");
-		if (als.size() < 13) {
-			byte[] buf = new byte[13];
+		if (als.size() < 14) {
+			byte[] buf = new byte[14];
 			is.read(buf);
 			Inflater.addBitsToAls(als, buf);
 		}
