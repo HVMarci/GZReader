@@ -1,0 +1,7 @@
+bin/
+*.gz
+*.c
+*.tar
+.project
+.classpath
+.settings
