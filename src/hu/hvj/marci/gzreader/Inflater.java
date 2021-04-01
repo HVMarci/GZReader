@@ -22,9 +22,6 @@ public class Inflater {
 			is.read(buf);
 			addBitsToAls(bals, buf);
 //			bals.forEach(i->System.out.print(i ? 1 : 0));
-			System.out.println(bals.size());
-			bals.forEach(i->System.out.print(i ? 1 : 0));
-			System.out.println();
 			isLastBlock = bals.getLast();
 			int compressionMethod = bals.getNextTwoBitInteger();
 //			if (c == 5) System.out.println(bals.getNextXBitIntegerLSBFirst(8));
