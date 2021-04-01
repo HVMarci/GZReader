@@ -22,6 +22,9 @@ public class Inflater {
 			is.read(buf);
 			addBitsToAls(bals, buf);
 //			bals.forEach(i->System.out.print(i ? 1 : 0));
+			System.out.println(bals.size());
+			bals.forEach(i->System.out.print(i ? 1 : 0));
+			System.out.println();
 			isLastBlock = bals.getLast();
 			int compressionMethod = bals.getNextTwoBitInteger();
 //			if (c == 5) System.out.println(bals.getNextXBitIntegerLSBFirst(8));
@@ -57,6 +60,7 @@ public class Inflater {
 					} else {
 						System.out.printf("Az NLEN helyes! (LEN: 0x%04X, NLEN: 0x%04X)%n", len, nlen);
 					}
+					len -= bals.size() / 8;
 					while (bals.size() > 0) {
 						als.add(bals.getNextByte());
 					}
