@@ -23,7 +23,7 @@ public class Helper {
 		bits[7] = ((b & 128) != 0);
 		return bits;
 	}
-	
+
 	public static boolean[] byteToBooleansMSBFirst(byte b) {
 		boolean[] bits = new boolean[8];
 		bits[0] = ((b & 128) != 0);
@@ -36,7 +36,7 @@ public class Helper {
 		bits[7] = ((b & 1) != 0);
 		return bits;
 	}
-	
+
 	public static String decimalToBinary(int d, int len) {
 		StringBuilder sb = new StringBuilder();
 		if (len > 8) {
@@ -49,6 +49,48 @@ public class Helper {
 			sb.append(b[i] ? 1 : 0);
 		}
 		return new String(sb);
+	}
+
+	public static String unitToSmallest(long inBytes) {
+		boolean isNegative;
+		if (inBytes < 0) {
+			isNegative = true;
+			inBytes = -inBytes;
+		} else {
+			isNegative = false;
+		}
+		String unit;
+		int unitLevel = 0;
+		float sizeInUnit = inBytes;
+
+		while (sizeInUnit > 1024) {
+			sizeInUnit /= 1024.0;
+			unitLevel++;
+		}
+
+		switch (unitLevel) {
+		case 1:
+			unit = "kilobájt";
+			break;
+		case 2:
+			unit = "megabájt";
+			break;
+		case 3:
+			unit = "gigabájt";
+			break;
+		case 4:
+			unit = "terabájt";
+			break;
+		case 5:
+			unit = "petabájt";
+			break;
+		default:
+			unitLevel = -1;
+			unit = "";
+			break;
+		}
+
+		return unitLevel > 0 ? String.format(" (%,.2f %s)", isNegative ? -sizeInUnit : sizeInUnit, unit) : "";
 	}
 
 }

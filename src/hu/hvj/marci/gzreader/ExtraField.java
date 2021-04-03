@@ -25,4 +25,8 @@ public class ExtraField {
 		return this.data;
 	}
 
+	public String getID() {
+		return new String(new byte[] { this.si1, this.si2 });
+	}
+
 }

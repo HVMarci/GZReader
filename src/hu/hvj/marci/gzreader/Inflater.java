@@ -11,22 +11,24 @@ public class Inflater {
 	public static final int DYNAMIC_HUFFMAN_CODES = 2;
 	public static final int RESERVED_COMPRESSED_METHOD = 3;
 
-	public static byte[] inflate(InputStream is) throws IOException {
+	private int blockCount;
+	private int[] blockTypes;
+
+	public byte[] inflate(InputStream is) throws IOException {
 		ArrayList<Byte> als = new ArrayList<Byte>();
 		BooleanArrayList bals = new BooleanArrayList();
 		byte[] buf = new byte[1];
 
 		boolean isLastBlock;
-		int c = 1;
+		this.blockCount = 0;
+		this.blockTypes = new int[3];
 		do {
 			is.read(buf);
 			addBitsToAls(bals, buf);
-//			bals.forEach(i->System.out.print(i ? 1 : 0));
 			isLastBlock = bals.getLast();
 			int compressionMethod = bals.getNextTwoBitInteger();
-//			if (c == 5) System.out.println(bals.getNextXBitIntegerLSBFirst(8));
-//			System.out.println(isLastBlock);
 			String tomoritesiMetodus;
+			this.blockTypes[compressionMethod]++;
 			switch (compressionMethod) {
 			case STORED:
 				tomoritesiMetodus = "tárolva";
@@ -41,7 +43,8 @@ public class Inflater {
 				tomoritesiMetodus = "definiálatlan (" + compressionMethod + ") HIBA";
 				break;
 			}
-			System.out.printf("Block %d megkezdve (%s, tömörítési mód: %s)%n", c++, isLastBlock ? "utolsó" : "nem utolsó", tomoritesiMetodus);
+			System.out.printf("Blokk %d megkezdve (%s, tömörítési mód: %s)%n", ++this.blockCount,
+					isLastBlock ? "utolsó" : "nem utolsó", tomoritesiMetodus);
 			if (compressionMethod == STORED) {
 				bals.nextByte();
 				if (bals.size() < 32) {
@@ -234,6 +237,18 @@ public class Inflater {
 			int elozo = distUpperBound(dist - 1);
 			return (int) Math.pow(2, distExtraBits(dist)) + elozo;
 		}
+	}
+
+	public int getBlockCount() {
+		return this.blockCount;
+	}
+
+	public int[] getBlockTypes() {
+		return this.blockTypes.clone();
+	}
+
+	public int getBlockTypeCount(int type) {
+		return this.blockTypes[type];
 	}
 
 }
